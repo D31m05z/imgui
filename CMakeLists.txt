@@ -4,8 +4,10 @@ project(imgui)
 
 set(imgui_dir ${CMAKE_CURRENT_LIST_DIR})
 
+
 find_package(glm REQUIRED)
-find_package(glfw3 REQUIRED)
+find_package(glfw3 REQUIRED CONFIG)
+find_package(glew REQUIRED CONFIG)
 
 set(imgui_public_hdrs
     ${imgui_dir}/imgui.h
@@ -35,10 +37,15 @@ target_include_directories(imgui PUBLIC
 target_link_libraries(imgui
     PUBLIC glfw
     PRIVATE glm
+    PRIVATE ::glew
 )
 
 set_target_properties(imgui PROPERTIES DEBUG_POSTFIX d)
-target_compile_definitions(${PROJECT_NAME} PUBLIC -DUSE_GL_ES3)
+
+#TODO: workaround : #include <GLES3/gl3.h> not found
+if(NOT APPLE)
+    target_compile_definitions(${PROJECT_NAME} PUBLIC -DUSE_GL_ES3)
+endif()
 
 configure_file(imgui-config.cmake.in imgui-config.cmake @ONLY)
 install(FILES ${CMAKE_BINARY_DIR}/imgui-config.cmake DESTINATION lib/cmake/imgui)
