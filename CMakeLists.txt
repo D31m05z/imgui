@@ -10,13 +10,14 @@ find_package(glfw3 REQUIRED)
 set(imgui_public_hdrs
     ${imgui_dir}/imgui.h
     ${imgui_dir}/imconfig.h
+    ${imgui_dir}/imgui_internal.h
+    ${imgui_dir}/imstb_textedit.h
     ${imgui_dir}/examples/imgui_impl_glfw.h
     ${imgui_dir}/examples/imgui_impl_opengl3.h
 )
 
 add_library(imgui
     ${imgui_public_hdrs}
-    ${imgui_dir}/imgui_internal.h
     ${imgui_dir}/imgui.cpp
     ${imgui_dir}/imgui_draw.cpp
     ${imgui_dir}/imgui_widgets.cpp
